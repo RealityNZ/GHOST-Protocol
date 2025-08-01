@@ -80,3 +80,4 @@ ehthumbs.db
 surveillance-data/
 token-vault-backups/
 audit-logs/
+.env
