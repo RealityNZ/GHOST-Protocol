@@ -22,11 +22,6 @@
     "prebuild": "expo prebuild --clean",
     "prebuild:ios": "expo prebuild --platform ios --clean",
     "prebuild:android": "expo prebuild --platform android --clean"
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "lint:fix": "eslint . --fix",
-    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@expo-google-fonts/jetbrains-mono": "^0.4.0",
