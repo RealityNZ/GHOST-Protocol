@@ -1,6 +1,53 @@
 import { useState, useCallback } from 'react';
-import { ChannelSummary, SummaryRequest, ChannelMessage, SUMMARY_TEMPLATES } from '@/types/summary';
-import { useAIBackends } from './useAIBackends';
+
+interface ChannelSummary {
+  id: string;
+  channelId: string;
+  channelName: string;
+  serverName: string;
+  messageCount: number;
+  summary: string;
+  keyTopics: string[];
+  sentiment: 'positive' | 'negative' | 'neutral' | 'mixed';
+  participants: Array<{
+    username: string;
+    messageCount: number;
+    mostActive: boolean;
+  }>;
+  generatedAt: string;
+  aiBackend: string;
+  processingTime: number;
+}
+
+interface SummaryRequest {
+  channelId: string;
+  messageCount: number;
+  includeDeleted?: boolean;
+  timeRange?: {
+    start?: string;
+    end?: string;
+  };
+}
+
+interface ChannelMessage {
+  id: string;
+  content: string;
+  author: {
+    id: string;
+    username: string;
+  };
+  timestamp: string;
+  edited?: boolean;
+  deleted?: boolean;
+}
+
+const SUMMARY_TEMPLATES = [
+  {
+    id: 'detailed-analysis',
+    name: 'Detailed Analysis',
+    prompt: 'Analyze this conversation...'
+  }
+];
 
 interface UseChannelSummaryReturn {
   summaries: ChannelSummary[];

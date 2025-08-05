@@ -2,7 +2,38 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Hash, Brain, X, Play, Download, Clock, Users, TrendingUp, MessageSquare } from 'lucide-react-native';
-import { ChannelSummary, SUMMARY_TEMPLATES } from '@/types/summary';
+
+interface ChannelSummary {
+  id: string;
+  channelId: string;
+  channelName: string;
+  serverName: string;
+  messageCount: number;
+  summary: string;
+  keyTopics: string[];
+  sentiment: 'positive' | 'negative' | 'neutral' | 'mixed';
+  participants: Array<{
+    username: string;
+    messageCount: number;
+    mostActive: boolean;
+  }>;
+  generatedAt: string;
+  aiBackend: string;
+  processingTime: number;
+}
+
+const SUMMARY_TEMPLATES = [
+  {
+    id: 'detailed-analysis',
+    name: 'Detailed Analysis',
+    description: 'Comprehensive conversation analysis with insights'
+  },
+  {
+    id: 'brief-summary', 
+    name: 'Brief Summary',
+    description: 'Quick overview of conversation highlights'
+  }
+];
 
 interface ChannelSummaryModalProps {
   channelId: string;

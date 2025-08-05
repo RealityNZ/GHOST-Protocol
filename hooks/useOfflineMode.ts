@@ -1,5 +1,101 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { DiscordArchive, ReplaySession, ArchiveMessage, ReplayState, ArchiveImportResult } from '@/types/offline';
+
+interface ArchiveMessage {
+  id: string;
+  content: string;
+  author: {
+    id: string;
+    username: string;
+  };
+  channel: {
+    id: string;
+    name: string;
+    type: 'text' | 'voice';
+  };
+  server: {
+    id: string;
+    name: string;
+  };
+  timestamp: string;
+  edited?: boolean;
+  deleted?: boolean;
+}
+
+interface DiscordArchive {
+  id: string;
+  name: string;
+  description?: string;
+  exportDate: string;
+  messageCount: number;
+  channels: Array<{
+    id: string;
+    name: string;
+    type: 'text' | 'voice';
+    messageCount: number;
+  }>;
+  servers: Array<{
+    id: string;
+    name: string;
+  }>;
+  messages: ArchiveMessage[];
+  metadata: {
+    exportTool: string;
+    version: string;
+    dateRange: {
+      start: string;
+      end: string;
+    };
+  };
+}
+
+interface ReplaySession {
+  id: string;
+  name: string;
+  description?: string;
+  archiveId: string;
+  createdAt: string;
+  updatedAt: string;
+  settings: {
+    playbackSpeed: number;
+    autoAdvance: boolean;
+    includeDeleted: boolean;
+    filterChannels: string[];
+    filterUsers: string[];
+  };
+  currentPosition: number;
+  totalMessages: number;
+  isPlaying: boolean;
+  responses: Array<{
+    messageId: string;
+    prompt: string;
+    response: string;
+    persona: string;
+    modifiers: string[];
+    timestamp: string;
+  }>;
+}
+
+interface ReplayState {
+  currentMessage?: ArchiveMessage;
+  nextMessage?: ArchiveMessage;
+  previousMessage?: ArchiveMessage;
+  progress: number;
+  timeRemaining: number;
+  messagesRemaining: number;
+}
+
+interface ArchiveImportResult {
+  success: boolean;
+  archive?: DiscordArchive;
+  errors: string[];
+  warnings: string[];
+  stats: {
+    messagesProcessed: number;
+    channelsFound: number;
+    serversFound: number;
+    duplicatesSkipped: number;
+  };
+}
 
 interface UseOfflineModeReturn {
   archives: DiscordArchive[];

@@ -1,5 +1,86 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { TokenVault, VaultToken, SecurityAuditLog, SecuritySettings, VaultBackup, TokenUsageStats, DEFAULT_SECURITY_SETTINGS } from '@/types/security';
+
+interface TokenVault {
+  id: string;
+  name: string;
+  description?: string;
+  tokens: VaultToken[];
+  encrypted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  lastAccessed?: string;
+  accessCount: number;
+}
+
+interface VaultToken {
+  id: string;
+  name: string;
+  type: 'discord-bot' | 'discord-user' | 'openai' | 'anthropic' | 'custom';
+  value: string;
+  description?: string;
+  permissions: string[];
+  expiresAt?: string;
+  createdAt: string;
+  lastUsed?: string;
+  usageCount: number;
+  metadata: Record<string, any>;
+}
+
+interface SecurityAuditLog {
+  id: string;
+  timestamp: string;
+  action: string;
+  details: string;
+  tokenId?: string;
+  vaultId?: string;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+}
+
+interface SecuritySettings {
+  autoLockTimeout: number;
+  requireAuthForAccess: boolean;
+  enableAuditLogging: boolean;
+  maxFailedAttempts: number;
+  lockoutDuration: number;
+  encryptionConfig: any;
+  backupReminders: boolean;
+  tokenRotationWarnings: boolean;
+}
+
+interface VaultBackup {
+  id: string;
+  vaultId: string;
+  timestamp: string;
+  encrypted: boolean;
+  checksum: string;
+  size: number;
+  metadata: any;
+}
+
+interface TokenUsageStats {
+  tokenId: string;
+  totalRequests: number;
+  successfulRequests: number;
+  failedRequests: number;
+  avgLatency: number;
+  lastError?: string;
+  dailyUsage: Array<{
+    date: string;
+    requests: number;
+  }>;
+  rateLimitHits: number;
+}
+
+const DEFAULT_SECURITY_SETTINGS: SecuritySettings = {
+  autoLockTimeout: 15,
+  requireAuthForAccess: true,
+  enableAuditLogging: true,
+  maxFailedAttempts: 3,
+  lockoutDuration: 30,
+  encryptionConfig: {},
+  backupReminders: true,
+  tokenRotationWarnings: true
+};
 
 interface UseTokenVaultReturn {
   vaults: TokenVault[];

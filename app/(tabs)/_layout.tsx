@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { Eye, Activity, Server, Settings, Brain } from 'lucide-react-native';
+import { Eye, Activity, Server, Settings, Brain, Cog } from 'lucide-react-native';
 
 export default function TabLayout() {
   return (
@@ -11,8 +11,8 @@ export default function TabLayout() {
           borderTopColor: '#FF2EC0',
           borderTopWidth: 1,
           height: 80,
-          paddingBottom: 20,
-          paddingTop: 10,
+          paddingBottom: 0,
+          paddingTop: 8,
         },
         tabBarActiveTintColor: '#00FFF7',
         tabBarInactiveTintColor: '#666666',
@@ -20,6 +20,7 @@ export default function TabLayout() {
           fontFamily: 'JetBrainsMono-Regular',
           fontSize: 10,
           fontWeight: '600',
+          marginBottom: 8,
         },
       }}>
       <Tabs.Screen
@@ -41,15 +42,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="activity"
-        options={{
-          title: 'LOGS',
-          tabBarIcon: ({ size, color }) => (
-            <Activity size={size} color={color} strokeWidth={2} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="possession"
         options={{
           title: 'HIJACK',
@@ -59,11 +51,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="activity"
+        options={{
+          title: 'LOGS',
+          tabBarIcon: ({ size, color }) => (
+            <Activity size={size} color={color} strokeWidth={2} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="config"
         options={{
           title: 'CONFIG',
           tabBarIcon: ({ size, color }) => (
-            <Settings size={size} color={color} strokeWidth={2} />
+            <Cog size={size} color={color} strokeWidth={2} />
           ),
         }}
       />

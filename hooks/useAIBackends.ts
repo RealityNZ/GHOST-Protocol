@@ -1,6 +1,73 @@
 import { useState, useCallback, useRef } from 'react';
-import { AIBackend, BackendTest, LOCAL_MODEL_PRESETS, AIGenerationRequest, AIGenerationResponse } from '@/types/ai-backends';
-import { TokenVaultAccessors } from '@/types/security';
+
+interface AIBackend {
+  id: string;
+  name: string;
+  type: 'openai' | 'anthropic' | 'local' | 'custom';
+  description: string;
+  enabled: boolean;
+  config: {
+    endpoint: string;
+    tokenId?: string;
+    vaultId?: string;
+    model: string;
+    temperature: number;
+    maxTokens: number;
+    timeout: number;
+    headers?: Record<string, string>;
+    authType: 'bearer' | 'api-key' | 'none';
+  };
+  metadata: {
+    createdAt: string;
+    updatedAt: string;
+    lastUsed?: string;
+    requestCount: number;
+    avgLatency?: number;
+    lastError?: string;
+  };
+}
+
+interface BackendTest {
+  id: string;
+  backendId: string;
+  timestamp: string;
+  success: boolean;
+  latency?: number;
+  error?: string;
+  response?: string;
+}
+
+interface AIGenerationRequest {
+  prompt: string;
+  model?: string;
+  temperature?: number;
+  maxTokens?: number;
+  stream?: boolean;
+}
+
+interface AIGenerationResponse {
+  response: string;
+  tokens: number;
+  latency: number;
+  model: string;
+  backend: string;
+}
+
+interface TokenVaultAccessors {
+  getToken: (vaultId: string, tokenId: string) => Promise<any>;
+  activeVaultId: string | null;
+  isLocked: boolean;
+}
+
+const LOCAL_MODEL_PRESETS = [
+  {
+    name: 'Ollama',
+    description: 'Local Ollama instance',
+    endpoint: 'http://localhost:11434/api/generate',
+    defaultModel: 'llama2',
+    authType: 'none' as const
+  }
+];
 
 interface UseAIBackendsReturn {
   backends: AIBackend[];

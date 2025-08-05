@@ -1,5 +1,55 @@
 import { useState, useCallback } from 'react';
-import { Plugin, PluginExecution, PluginAPI, PLUGIN_TEMPLATES } from '@/types/plugins';
+
+interface Plugin {
+  id: string;
+  name: string;
+  description: string;
+  category: 'preprocessor' | 'llm-swapper' | 'response-filter' | 'custom';
+  version: string;
+  author: string;
+  enabled: boolean;
+  code: string;
+  metadata: {
+    createdAt: string;
+    updatedAt: string;
+    executionCount: number;
+    lastError?: string;
+  };
+}
+
+interface PluginExecution {
+  pluginId: string;
+  timestamp: string;
+  input: any;
+  output: any;
+  duration: number;
+  success: boolean;
+  error?: string;
+}
+
+interface PluginAPI {
+  log: (message: string) => void;
+  error: (message: string) => void;
+  storage: {
+    get: (key: string) => any;
+    set: (key: string, value: any) => void;
+    remove: (key: string) => void;
+  };
+  utils: {
+    hash: (input: string) => string;
+    timestamp: () => string;
+    random: () => number;
+  };
+}
+
+const PLUGIN_TEMPLATES = [
+  {
+    name: 'Sentiment Analyzer',
+    description: 'Analyzes message sentiment before processing',
+    category: 'preprocessor' as const,
+    code: '// Sentiment analysis code...'
+  }
+];
 
 interface UsePluginLoaderReturn {
   plugins: Plugin[];

@@ -2,7 +2,26 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Code, Play, Save, X, Download, Upload } from 'lucide-react-native';
-import { Plugin, PLUGIN_TEMPLATES } from '@/types/plugins';
+
+interface Plugin {
+  id: string;
+  name: string;
+  description: string;
+  category: 'preprocessor' | 'llm-swapper' | 'response-filter' | 'custom';
+  version: string;
+  author: string;
+  enabled: boolean;
+  code: string;
+}
+
+const PLUGIN_TEMPLATES = [
+  {
+    name: 'Sentiment Analyzer',
+    description: 'Analyzes message sentiment',
+    category: 'preprocessor',
+    code: '// Plugin code here...'
+  }
+];
 
 interface PluginEditorProps {
   plugin?: Plugin;

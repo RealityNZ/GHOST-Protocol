@@ -6,18 +6,28 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "channel": "development",
       "env": {
         "EXPO_PUBLIC_APP_ENV": "development"
       }
     },
     "preview": {
       "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
       "channel": "preview",
       "env": {
         "EXPO_PUBLIC_APP_ENV": "staging"
       }
     },
     "production": {
+      "android": {
+        "buildType": "apk"
+      },
       "channel": "production",
       "env": {
         "EXPO_PUBLIC_APP_ENV": "production"

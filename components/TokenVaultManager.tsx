@@ -2,7 +2,35 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Shield, Plus, Eye, EyeOff, Copy, RotateCcw, Trash2, Lock, Clock as Unlock, Download, Upload, Key, Clock, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle } from 'lucide-react-native';
-import { TokenVault, VaultToken, TOKEN_TEMPLATES } from '@/types/security';
+
+interface TokenVault {
+  id: string;
+  name: string;
+  description?: string;
+  tokens: VaultToken[];
+  createdAt: string;
+  accessCount: number;
+}
+
+interface VaultToken {
+  id: string;
+  name: string;
+  type: 'discord-bot' | 'discord-user' | 'openai' | 'anthropic' | 'custom';
+  value: string;
+  description?: string;
+  permissions: string[];
+  createdAt: string;
+  usageCount: number;
+  lastUsed?: string;
+}
+
+const TOKEN_TEMPLATES = [
+  {
+    name: 'Discord Bot Token',
+    type: 'discord-bot' as const,
+    placeholder: 'Bot TOKEN_HERE'
+  }
+];
 
 interface TokenVaultManagerProps {
   vaults: TokenVault[];
