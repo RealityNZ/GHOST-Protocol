@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Settings, Shield, Zap, Download, Trash2, AlertTriangle } from 'lucide-react-native';
+import { Settings, Shield, Zap, Download, Trash2, TriangleAlert as AlertTriangle } from 'lucide-react-native';
 
 export default function SettingsScreen() {
   const [glitchMode, setGlitchMode] = useState(true);
