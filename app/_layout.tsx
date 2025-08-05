@@ -3,12 +3,14 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text } from 'react-native';
 import { useFonts, JetBrainsMono_400Regular, JetBrainsMono_700Bold } from '@expo-google-fonts/jetbrains-mono';
-import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from 'expo-splash-screen'
+import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 
 // Prevent auto-hide of splash screen
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  useFrameworkReady();
   const [fontsLoaded, fontError] = useFonts({
     'JetBrainsMono-Regular': JetBrainsMono_400Regular,
     'JetBrainsMono-Bold': JetBrainsMono_700Bold,
