@@ -11,7 +11,6 @@
     "web": "expo start --web",
     "build:android": "eas build --platform android",
     "build:ios": "eas build --platform ios",
-    "build:android": "eas build --platform android",
     "build:all": "eas build --platform all",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
@@ -59,6 +58,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@expo/cli": "^0.24.20",
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^13.2.2",
     "@types/react": "~19.0.10",
